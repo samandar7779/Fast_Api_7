@@ -96,7 +96,7 @@ async def create_new(
         with open(image_path, "wb") as f:
             f.write(await image.read())
 
-    # VIDEO CHECK
+
     if video:
         video_extension = video.filename.split('.')[-1]
         if video_extension.lower() not in ['mp4', 'avi', 'mov']:
