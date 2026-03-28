@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from typing import Optional
 
 from fastapi import FastAPI, Depends, UploadFile
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.ext.asyncio import AsyncSession
 import uvicorn
 
@@ -23,7 +24,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-
+app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
 
 @app.post('/category', response_model=CategoryResponse)
 async def create_category(
@@ -94,4 +95,4 @@ async def delete_news(news_id: int, db: AsyncSession = Depends(get_db)):
 
 
 if __name__ == '__main__':
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run(app)
