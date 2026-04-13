@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-
+app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
 
 @app.post('/category', response_model=CategoryResponse)
 async def create_category(
